@@ -1,5 +1,3 @@
-# HAND TRACKING CODE STARTS HERE
-
 import cv2
 import mediapipe as mp
 import time
@@ -44,9 +42,6 @@ while True:
             xAvg = xAvg / 20
             yAvg = yAvg / 20
             pyautogui.moveTo(-3*cx, 3*cy)
-
-
-
             #if xAvg < 160 and yAvg < 120:
             #    pyautogui.press('w')
             #elif xAvg < 160 and yAvg > 120:
@@ -63,16 +58,16 @@ while True:
 
     image = cv2.flip(img, 1)
 
-    cv2.putText(image,str(int(fps)), (10,70), cv2.FONT_HERSHEY_PLAIN, 3, (255,0,255), 3)
+    #cv2.putText(image,str(int(fps)), (10,70), cv2.FONT_HERSHEY_PLAIN, 3, (255,0,255), 3)
 
-    cv2.line(image, (0, 0), (160, 120), (255, 0, 0), 2, 0, None)
-    cv2.line(image, (640, 0), (480, 120), (255, 0, 0), 2, 0, None)
-    cv2.line(image, (0, 480), (160, 360), (255, 0, 0), 2, 0, None)
-    cv2.line(image, (640, 480), (480, 360), (255, 0, 0), 2, 0, None)
-    cv2.line(image, (160, 120), (480, 120), (0, 255, 0), 2, 0, None)
-    cv2.line(image, (480, 120), (480, 360), (0, 255, 0), 2, 0, None)
-    cv2.line(image, (480, 360), (160, 360), (0, 255, 0), 2, 0, None)
-    cv2.line(image, (160, 360), (160, 120), (0, 255, 0), 2, 0, None)
+    #cv2.line(image, (0, 0), (160, 120), (255, 0, 0), 2, 0, None)
+    #cv2.line(image, (640, 0), (480, 120), (255, 0, 0), 2, 0, None)
+    #cv2.line(image, (0, 480), (160, 360), (255, 0, 0), 2, 0, None)
+    #cv2.line(image, (640, 480), (480, 360), (255, 0, 0), 2, 0, None)
+    #cv2.line(image, (160, 120), (480, 120), (0, 255, 0), 2, 0, None)
+    #cv2.line(image, (480, 120), (480, 360), (0, 255, 0), 2, 0, None)
+    #cv2.line(image, (480, 360), (160, 360), (0, 255, 0), 2, 0, None)
+    #cv2.line(image, (160, 360), (160, 120), (0, 255, 0), 2, 0, None)
     # img is 640 wide
     # img is 480 tall
 
