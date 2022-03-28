@@ -45,7 +45,7 @@ while True:
             mpDraw.draw_landmarks(img, handLms, mpHands.HAND_CONNECTIONS)
             xAvg = xAvg / 20
             yAvg = yAvg / 20
-            pyautogui.moveTo(3*cx, 3*cy)
+            #pyautogui.moveTo(3*xAvg, 3*yAvg)
 
             #CLICKING CODE STARTS HERE
             indexX = 0
@@ -78,6 +78,7 @@ while True:
                 cv2.putText(imgRGB, fistWarning, (pinkyX + 2, indexY - 2), (font), .7,
                             (0, 0, 255), 1, cv2.LINE_4)
                 print("Fist!!")
+
                 pyautogui.click()
             #if xAvg < 160 and yAvg < 120:
             #    pyautogui.press('w')
@@ -87,6 +88,7 @@ while True:
             #    pyautogui.press('s')
             #elif xAvg > 480 and yAvg < 360:
             #    pyautogui.press('a')
+            pyautogui.moveTo(3*handBottomX, (3*handBottomY)-200)
 
 
     cTime = time.time()
