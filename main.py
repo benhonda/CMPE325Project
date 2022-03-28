@@ -37,14 +37,14 @@ while True:
                 cx, cy = int(lm.x *w), int(lm.y*h)
                 #if id ==0:
                 cv2.circle(img, (cx,cy), 3, (255,0,255), cv2.FILLED)
-                xAvg = xAvg + cx
-                yAvg = yAvg + cy
+                #xAvg = xAvg + cx
+                #yAvg = yAvg + cy
                 lmList.append([id, cx, cy])
 
             #CURSOR CODE STARTS HERE
             mpDraw.draw_landmarks(img, handLms, mpHands.HAND_CONNECTIONS)
-            xAvg = xAvg / 20
-            yAvg = yAvg / 20
+            #xAvg = xAvg / 20
+            #yAvg = yAvg / 20
             #pyautogui.moveTo(3*xAvg, 3*yAvg)
 
             #CLICKING CODE STARTS HERE
