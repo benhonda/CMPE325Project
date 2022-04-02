@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS -->
+    <!-- <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    /> -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <title>Group 11 Prototype</title>
+    <style>
+      * {
+        cursor: none;
+      }
+
+      [x-cloak] {
+        display: none;
+      }
+
+      .cursor {
+        position: fixed;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: #fff;
+        pointer-events: none;
+        mix-blend-mode: difference;
+        z-index: 99;
+        transition: transform 0.2s;
+      }
+    </style>
+
+    <script src="//unpkg.com/alpinejs" defer></script>
+  </head>
+  <body class="relative min-w-screen h-screen bg-white" x-data="{ modalOpen: false, isTracking: false, isFirst: true }">
+    <div class="relative mx-auto pt-12">
+      <div class="grid grid-cols-5">
+        <div class="col-start-2 col-span-3">
+          <p class="tracking-wide uppercase text-blue-600 pb-1">Group 11 CISC-325</p>
+          <h1 class="text-3xl font-semibold mb-2">Hand Gesture Input Prototype</h1>
+          <p class="pb-2">
+            Welcome to Group 11's high-fidelity prototype. This is the final component of the course project for
+            CISC-325.
+          </p>
+
+          <h4 class="mb-1 text-xl font-semibold">About</h4>
+
+          <p>
+            Everything you need to operate the prototype, including a gesture tutorial, can be found by clicking the
+            Settings button that is located at the bottom-right of your screen. We designed it this way with the
+            intention that this menu would be visible and accessible from any web page, giving you complete control over
+            the tracker. For now, however, we want to give you a feel for what it might be like.
+          </p>
+
+          <p class="py-3">
+            As long as this page remains open, you will be able to use this prototype from any web page or desktop
+            application on your computer. Once you get a feel for it, try using
+            <a href="https://youtube.com" target="_blank" class="text-blue-700 underline hover:text-blue-800"
+              >YouTube</a
+            >
+            or
+            <a href="https://netflix.com" target="_blank" class="text-blue-700 underline hover:text-blue-800">Netflix</a
+            >!
+          </p>
+
+          <div x-cloak x-show="isFirst && !isTracking" class="">
+            <h4 class="mb-1 text-xl font-semibold">Get started</h4>
+
+            <p>
+              First, learn the hand gestures required to operate the prototype (don't worry, there are only two).
+              <button @click="modalOpen = true" class="text-blue-700 underline hover:text-blue-800">
+                Click here to open the gesture tutorial
+              </button>
+            </p>
+
+            <p class="py-3">
+              When you're ready, you can start the prototype by clicking the green button below. You will need to give
+              your browser access to your camera (<a
+                href="https://support.onemob.com/hc/en-us/articles/360037342154-How-do-I-grant-permission-for-Camera-and-Microphone-in-my-web-browser-"
+                target="_blank"
+                class="text-blue-700 underline hover:text-blue-800"
+                >click here</a
+              >
+              if you have any trouble with this).
+            </p>
+          </div>
+
+          <!-- 
+
+              In the welcome text, explain the steps:
+                1. Navigate to menu icon in bottom right using mouse/trackpad
+                2. Toggle Tracking-on, make sure you allow camera (include an online tutorial link)
+                3. **Immediately send them to a modal that explains gestures, and has a intro demo to click squares or something simple
+                4. After explain, the menu icon (how it could be used on a site front)
+                5. Encourage them to leave the window open and try browsing around the computer. Netflix/YouTube are good examples!
+
+
+                maybe another button for demo?
+
+
+           -->
+
+          <div x-cloak x-show="isFirst && !isTracking" class="mt-8 flex justify-center">
+            <button
+              @click="isTracking = true; isFirst = false;"
+              class="py-4 px-4 bg-green-600 hover:bg-green-800 transition-colors rounded text-white flex items-center space-x-2 text-2xl shadow-lg"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" viewBox="0 0 20 20" fill="currentColor">
+                <path
+                  fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <span>Start the tracker</span>
+            </button>
+          </div>
+
+          <div class="mt-6 grid grid-cols-5">
+            <div class="col-start-2 col-span-3 text-center">
+              <img x-bind:src="isTracking ? '{{ url_for('video_feed') }}' : ''" width="100%" />
+              <!-- <button
+                x-cloak
+                x-show="isTracking"
+                @click="modalOpen = true"
+                class="mt-2 text-blue-700 underline hover:text-blue-800"
+              >
+                Need help? Click here for a tutorial
+              </button> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="z-50 absolute right-12 bottom-12 flex flex-col items-center" x-data="{ open: false }">
+      <div x-cloak x-show="open" class="pb-6 text-md flex flex-col space-y-6">
+        <button class="flex flex-col items-center space-y-1 group" @click="modalOpen = true">
+          <div
+            class="h-20 w-20 rounded-full bg-blue-500 group-hover:bg-blue-700 transition-colors shadow-lg text-white flex items-center justify-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-8 w-8"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11"
+              />
+            </svg>
+          </div>
+          <span
+            class="bg-gray-700 group-hover:bg-gray-900 transition-colors text-white px-1.5 py-1 rounded w-20 text-center leading-tight shadow-lg"
+          >
+            Gestures (tutorial)</span
+          >
+        </button>
+
+        <button
+          x-cloak
+          x-show="!isTracking"
+          @click="isTracking = true"
+          class="flex flex-col items-center space-y-1 group"
+        >
+          <div
+            class="h-20 w-20 rounded-full bg-blue-500 group-hover:bg-blue-700 transition-colors shadow-lg text-white flex items-center justify-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-8 w-8"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+              />
+            </svg>
+          </div>
+          <span
+            class="bg-gray-700 group-hover:bg-gray-900 transition-colors text-white px-1.5 py-1 rounded w-20 text-center leading-tight shadow-lg"
+          >
+            Turn on tracking</span
+          >
+        </button>
+
+        <button
+          x-cloak
+          x-show="isTracking"
+          @click="isTracking = false"
+          class="flex flex-col items-center space-y-1 group"
+        >
+          <div
+            class="h-20 w-20 rounded-full bg-blue-500 group-hover:bg-blue-700 transition-colors shadow-lg text-white flex items-center justify-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-8 w-8"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"
+              />
+            </svg>
+          </div>
+          <span
+            class="bg-gray-700 group-hover:bg-gray-900 transition-colors text-white px-1.5 py-1 rounded w-20 text-center leading-tight shadow-lg"
+          >
+            Turn off tracking</span
+          >
+        </button>
+      </div>
+
+      <button x-show="!open" class="flex flex-col items-center space-y-1 group" @click="open = true">
+        <div
+          class="h-20 w-20 rounded-full transition-colors bg-blue-500 group-hover:bg-blue-700 flex items-center justify-center text-white shadow-lg"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-10 w-10"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+        </div>
+        <span
+          class="bg-gray-700 group-hover:bg-gray-900 transition-colors text-white px-1.5 py-1 rounded w-20 text-center leading-tight shadow-lg"
+        >
+          Tracker settings</span
+        >
+      </button>
+
+      <button x-cloak x-show="open" class="flex flex-col items-center space-y-1 group" @click="open = false">
+        <div
+          class="h-14 w-14 rounded-full transition-colors bg-red-500 group-hover:bg-red-700 flex items-center justify-center text-white"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-8 w-8"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </div>
+        <span
+          class="bg-gray-700 group-hover:bg-gray-900 transition-colors text-white px-1.5 py-1 rounded w-auto text-center leading-tight shadow-lg"
+        >
+          Close</span
+        >
+      </button>
+    </div>
+
+    <div
+      x-cloak
+      x-show="modalOpen"
+      class="absolute top-0 left-0 z-20 bg-black bg-opacity-70 min-h-screen w-screen grid grid-cols-5"
+    >
+      <div @click.away="modalOpen = false" class="col-start-2 col-span-3 bg-white p-12">
+        <div class="flex">
+          <div class="flex-1">
+            <h4 class="tracking-wide uppercase text-blue-600">TUTORIAL</h4>
+            <h2 class="text-3xl font-semibold">Hand Gestures</h2>
+          </div>
+          <button
+            @click="modalOpen = false"
+            class="py-1 px-6 bg-gray-200 hover:bg-gray-400 transition-colors text-black uppercase tracking-wide rounded-full font-semibold"
+          >
+            CLOSE
+          </button>
+        </div>
+
+        <!-- <p class="mt-4">
+          There are only a few gestures that you need to know before you can use this prototype. These gestures will
+          allow you to move the cursor and click.
+        </p> -->
+
+        <h3 class="mt-6 text-xl font-semibold">To move the cursor</h3>
+        <p>
+          The prototype looks for and tracks the movement of your index finger to control the cursor. The purple box is
+          a representation of your screen (i.e. if you move your finger to the top-left of the purple box, your cursor
+          will move to the top-left of your screen)
+        </p>
+        <div class="mt-2 grid grid-cols-11">
+          <div class="col-span-5">
+            <img src="/static/cursor1.png" alt="Cursor demonstration (1/2)" />
+          </div>
+          <div></div>
+          <div class="col-span-5">
+            <img src="/static/cursor2.png" alt="Cursor demonstration (1/2)" />
+          </div>
+        </div>
+
+        <h3 class="mt-6 text-xl font-semibold">To click</h3>
+        <p>
+          To click, put up your index and middle fingers together (as if you were making a peace sign) and then pinch
+          them together. When your two fingers are up, the cursor will stop moving and will be ready for you to execute
+          the clicking gesture.
+        </p>
+
+        <div class="pb-12 mt-2 grid grid-cols-11">
+          <div class="col-span-5">
+            <img src="/static/clickMode.png" alt="Cursor demonstration (1/2)" />
+          </div>
+          <div></div>
+          <div class="col-span-5">
+            <img src="/static/click.png" alt="Cursor demonstration (1/2)" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cursor"></div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+
+    <script type="text/javascript">
+      $(document).ready(function () {
+        var cursor = $(".cursor");
+        $(window).mousemove(function (e) {
+          cursor.css({
+            top: e.clientY - cursor.height() / 2,
+            left: e.clientX - cursor.width() / 2,
+          });
+        });
+        $(window)
+          .mouseleave(function () {
+            cursor.css({ opacity: "0" });
+          })
+          .mouseenter(function () {
+            cursor.css({ opacity: "1" });
+          });
+      });
+    </script>
+  </body>
+</html>
