@@ -350,6 +350,8 @@
     ></script>
 
     <script type="text/javascript">
+      navigator.mediaDevices.getUserMedia({ video: { width: 1280, height: 720 } });
+
       $(document).ready(function () {
         var cursor = $(".cursor");
         $(window).mousemove(function (e) {
